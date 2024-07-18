@@ -1,21 +1,16 @@
 const chai = require('chai')
+const sinon = require('sinon')
 global.expect = chai.expect
-const fs = require('file-system')
+const fs = require('fs')
 const jsdom = require('mocha-jsdom')
 const path = require('path')
-const babel = require("@babel/core");
-const url = "http://localhost"
+const babel = require('babel-core');
 
 const html = fs.readFileSync(path.resolve(__dirname, '..', 'index.html'), 'utf-8')
 
-const babelResult = babel.transformFileSync(
-  path.resolve(__dirname, '..', 'index.js'), {
-    presets: ['@babel/env']
-  }
-);
-
-const src = babelResult.code
+const src = fs.readFileSync(path.resolve(__dirname, '..', 'index.js'), 'utf-8')
+console.log(src);
 
 jsdom({
-  html, src, url
+  html, src
 });
